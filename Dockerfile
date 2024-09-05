@@ -38,4 +38,10 @@ WORKDIR /var/www
 # Copy custom configurations PHP
 COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
 
+USER root
+RUN chown -R $user:www-data /var/www && \
+    chmod -R 775 /var/www && \
+    usermod -aG www-data $user && \
+    usermod -aG root $user
+
 USER $user
