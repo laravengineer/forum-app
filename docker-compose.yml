@@ -7,7 +7,7 @@ services:
         restart: unless-stopped
         working_dir: /var/www/
         volumes:
-            - ./:/var/www
+            - ./:/var/www:delegated
         depends_on:
             - redis
         networks:
@@ -20,7 +20,7 @@ services:
         ports:
             - "8000:80"
         volumes:
-            - ./:/var/www
+            - ./:/var/www:delegated
             - ./docker/nginx/:/etc/nginx/conf.d/
         networks:
             - laravel

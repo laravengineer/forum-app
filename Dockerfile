@@ -34,6 +34,7 @@ RUN pecl install -o -f redis \
 
 # Set working directory
 WORKDIR /var/www
+RUN chown -R $user:www-data /var/www && chmod -R 775 /var/www
 
 # Copy custom configurations PHP
 COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
@@ -43,5 +44,9 @@ RUN chown -R $user:www-data /var/www && \
     chmod -R 775 /var/www && \
     usermod -aG www-data $user && \
     usermod -aG root $user
+
+RUN mkdir -p /var/www/storage /var/www/storage/framework /var/www/storage/logs /var/www/bootstrap/cache \
+    && chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache \
+    && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
 USER $user
